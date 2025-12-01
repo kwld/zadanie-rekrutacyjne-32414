@@ -50,7 +50,7 @@ Uruchomienie (dev):
 docker compose -f docker-compose.dev.yml up --build
 ```
 
-```bash
 Zbudowanie i uruchomienie (prod):
+```bash
 docker compose -f docker-compose.prod.yml up --build
 ```
