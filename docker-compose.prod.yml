@@ -1,0 +1,38 @@
+services:
+  app:
+    build: .
+    container_name: ksiegarnia_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    # Zapewnia, że kontener nie będzie próbował uruchomić się przed poprawnym zbudowaniem
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      # Zmiana nazwy hosta bazy danych na nazwę serwisu 'postgres'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ksiegarnia
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    container_name: ksiegarnia_postgres
+    environment:
+      POSTGRES_DB: ksiegarnia
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      # Mapowanie wolumenu dla trwałości danych
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  pgdata:

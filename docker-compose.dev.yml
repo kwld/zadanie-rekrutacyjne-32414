@@ -1,0 +1,59 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: ksiegarnia_app_dev
+    ports:
+      - "8080:8080"   # aplikacja
+      - "5005:5005"   # debug port
+    volumes:
+      - ./:/app           # cały projekt (src + target)
+      - ~/.m2:/root/.m2   # cache Maven
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ksiegarnia
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: admin
+    depends_on:
+      - postgres
+    restart: always
+    networks:
+      - ksiegarnia_net
+
+  postgres:
+    image: postgres:16
+    container_name: ksiegarnia_postgres_dev
+    environment:
+      POSTGRES_DB: ksiegarnia
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_dev:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - ksiegarnia_net
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@local.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_REPLACE_SERVERS_ON_STARTUP: "True"
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    volumes:
+      - ./pgadmin4/servers.json:/pgadmin4/servers.json:ro
+    networks:
+      - ksiegarnia_net
+
+volumes:
+  pgdata_dev:
+
+networks:
+  ksiegarnia_net:
+    driver: bridge
