@@ -46,6 +46,7 @@ GET /autorzy/id -> zadanie 4.c
 Pijedyńczy autor
 
 Uruchomienie (dev):
+uruchamia dodatkowo na porcie 5050 pgadmin do edycji bazy
 ```bash
 docker compose -f docker-compose.dev.yml up --build
 ```
