@@ -47,5 +47,6 @@ Pijedyńczy autor
 
 Uruchomienie (dev):
 docker compose -f docker-compose.dev.yml up --build
+
 Zbudowanie i uruchomienie (prod):
 docker compose -f docker-compose.prod.yml up --build
