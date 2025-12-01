@@ -43,7 +43,7 @@ INSERT INTO autor (imie, nazwisko) VALUES
 -- KROK 2: Uzupełnianie tabeli KSIAZKA (znacznie więcej rekordów)
 -- kolumna: autor_id musi odnosić się do ID z tabeli autor
 
-INSERT INTO ksiazka (tytul, rokWydania, isbn, autor_id) VALUES
+INSERT INTO ksiazka (tytul, rok_wydania, isbn, autor_id) VALUES
 
 -- Autor 1: Andrzej Sapkowski
 ('Ostatnie życzenie', 1993, '978-8375780662', 1),
