@@ -46,7 +46,11 @@ GET /autorzy/id -> zadanie 4.c
 Pijedyńczy autor
 
 Uruchomienie (dev):
+```bash
 docker compose -f docker-compose.dev.yml up --build
+```
 
+```bash
 Zbudowanie i uruchomienie (prod):
 docker compose -f docker-compose.prod.yml up --build
+```
